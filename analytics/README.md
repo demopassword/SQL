@@ -40,11 +40,14 @@ GROUP BY
 ```
 ![image](https://github.com/demopassword/SQL/assets/145639874/9058f0ed-430e-4375-9b83-db71bebe8ff8)
 
+---
 
 ### TRIM 공백제거 함수
 ```sql
 TRIM(SPLIT_INDEX(log, '|', 3)) as ip
 ```
+---
+
 ### SPLIT_INDEX 특정 문자열 기준으로 나누는 함수
 레코드가 이런식으로 존재한다고 가정
 ```json
