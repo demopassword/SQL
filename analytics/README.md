@@ -19,7 +19,7 @@ WITH (
 ```
 
 example query
-```
+```sql
 %flink.ssql(type=update)
 SELECT `timestamp` as request_time, status, ip, `method` as client_method, path FROM log_table;
 ```
@@ -29,6 +29,7 @@ SELECT `timestamp` as request_time, status, ip, `method` as client_method, path 
 ---
 
 ### CONCAT 합치는 함수
+```sql
 %flink.ssql(type=update)
 
 SELECT
@@ -36,13 +37,14 @@ SELECT
 FROM log_table
 GROUP BY
     CONCAT(SPLIT_INDEX(log, ' ', 1), ' ', SPLIT_INDEX(log, ' ', 2), ' ', SPLIT_INDEX(log, ' ', 3))
-
+```
 ![image](https://github.com/demopassword/SQL/assets/145639874/9058f0ed-430e-4375-9b83-db71bebe8ff8)
 
 
 ### TRIM 공백제거 함수
+```sql
 TRIM(SPLIT_INDEX(log, '|', 3)) as ip
-
+```
 ### SPLIT_INDEX 특정 문자열 기준으로 나누는 함수
 레코드가 이런식으로 존재한다고 가정
 ```json
