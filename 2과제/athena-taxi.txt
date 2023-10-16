@@ -1,0 +1,26 @@
+CREATE EXTERNAL TABLE `wsi-database`.`taxi`
+(
+    `vendor` STRING,
+    `tripduration` STRING
+)
+PARTITIONED BY (
+    `id` STRING,
+    `year` int,
+    `month` int,
+    `day` int,
+    `hour` int)
+STORED AS PARQUET
+LOCATION 's3://cloud-day2/taxi/result/'
+TBLPROPERTIES(
+      "projection.enabled" = "true",
+      "projection.id.type" = "injected",
+      "projection.year.type" = "integer",
+      "projection.year.range" = "2023,2023",
+      "projection.month.type" = "integer",
+      "projection.month.range" = "01,12",
+      "projection.day.type" = "integer",
+      "projection.day.range" = "1,31",
+      "projection.hour.type" = "integer",
+      "projection.hour.range" = "0,24",
+      "storage.location.template" = "s3://cloud-day2/taxi/result/${id}/${year}/${month}/${day}/${hour}/"
+  );

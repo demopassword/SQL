@@ -1,0 +1,23 @@
+{
+  "cloudwatch.emitMetrics": false,
+  "kinesis.endpoint": "kinesis.ap-northeast-2.amazonaws.com",
+
+  "flows": [
+    {
+      "minTimeBetweenFilePollsMillis": "1",
+      "maxBufferAgeMillis": "1000",
+      "maxBufferSizeRecords": "1",
+      "filePattern": "/home/ec2-user/access.log",
+      "kinesisStream": "accesslog-stream",
+      "dataProcessingOptions": [
+        {
+                "optionName": "LOGTOJSON",
+                "logFormat": "COMMONAPACHELOG",
+                "matchPattern": "^(\\d{4}\/\\d{2}\/\\d{2} \\d{2}:\\d{2}:\\d{2}) (\\S+) - \\[\\d{2}\/\\w+\/\\d{4}:\\d{2}:\\d{2}:\\d{2} \\+\\d{4}\\] \"(GET|POST) ((?!\/healthcheck).*) (HTTP\/\\d.\\d)\" (\\d{3}) ([^\\s]+)",
+                "customFieldNames": ["datetime", "host", "method", "uri", "version", "status", "agent"]
+        }
+      ],
+      "partitionKeyOption": "RANDOM"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+CREATE EXTERNAL TABLE `wsi-database`.`accesslog`
+(
+    `method` STRING,
+    `path` STRING,
+    `statuscode` STRING
+)
+PARTITIONED BY (
+    `year` int,
+    `month` int,
+    `day` int,
+    `hour` int)
+STORED AS PARQUET
+LOCATION 's3://cloud-day2/accesslog/result/'
+TBLPROPERTIES(
+      "projection.enabled" = "true",
+      "projection.year.type" = "integer",
+      "projection.year.range" = "2023,2023",
+      "projection.month.type" = "integer",
+      'projection.month.digits'='2',
+      "projection.month.range" = "01,12",
+      "projection.day.type" = "integer",
+      'projection.day.digits'='2',
+      "projection.day.range" = "01,31",
+      "projection.hour.type" = "integer",
+      'projection.hour.digits'='2',
+      "projection.hour.range" = "00,24",
+      "storage.location.template" = "s3://cloud-day2/accesslog/result/year=${year}/month=${month}/day=${day}/hour=${hour}/"
+  );

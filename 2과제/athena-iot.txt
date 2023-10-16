@@ -1,0 +1,27 @@
+CREATE EXTERNAL TABLE `wsi-database`.`iot`
+(
+    `temperature` STRING,
+    `status` STRING
+)
+PARTITIONED BY (
+    `sensorid` int,
+    `year` int,
+    `month` int,
+    `day` int,
+    `hour` int)
+STORED AS PARQUET
+LOCATION 's3://cloud-day2/iot/result/'
+TBLPROPERTIES(
+      "projection.enabled" = "true",
+      "projection.sensorid.type" = "integer",
+      "projection.sensorid.range" = "1,100",
+      "projection.year.type" = "integer",
+      "projection.year.range" = "2023,2023",
+      "projection.month.type" = "integer",
+      "projection.month.range" = "01,12",
+      "projection.day.type" = "integer",
+      "projection.day.range" = "1,31",
+      "projection.hour.type" = "integer",
+      "projection.hour.range" = "0,24",
+      "storage.location.template" = "s3://cloud-day2/iot/result/sensorid=${sensorid}/year=${year}/month=${month}/day=${day}/hour=${hour}/"
+  );
