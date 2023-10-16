@@ -1,5 +1,6 @@
 create kinesis analytics table
 ```sql
+drop table if exists log_table;
 CREATE TABLE log_table (
   `timestamp` STRING,
   `status` INT,
